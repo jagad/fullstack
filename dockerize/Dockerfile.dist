@@ -1,0 +1,23 @@
+# ------------------------------------------------------------------------------
+# Pull base image.
+FROM node:0.12-slim
+MAINTAINER Agung Firdaus <agung@jagad.co.id>
+
+# ------------------------------------------------------------------------------
+# Copy this /dist dir content to container.
+RUN mkdir /tmp/fullstack
+ADD . /tmp/fullstack
+RUN cd /tmp/fullstack && npm install --production && mv /tmp/fullstack /fullstack/dist
+WORKDIR /fullstack/dist
+
+# ------------------------------------------------------------------------------
+# Set production Env.
+ENV NODE_ENV=production
+
+# ------------------------------------------------------------------------------
+# Expose ports.
+EXPOSE 8080
+
+# ------------------------------------------------------------------------------
+# Run node.
+CMD ["npm", "start"]
