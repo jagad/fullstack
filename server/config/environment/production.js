@@ -1,5 +1,5 @@
 'use strict';
-
+var host = process.env.MONGODB_PORT_27017_TCP_ADDR || '127.0.0.1';
 // Production specific configuration
 // =================================
 module.exports = {
@@ -18,6 +18,6 @@ module.exports = {
     uri:    process.env.MONGOLAB_URI ||
             process.env.MONGOHQ_URL ||
             process.env.OPENSHIFT_MONGODB_DB_URL+process.env.OPENSHIFT_APP_NAME ||
-            'mongodb://localhost/fullstack'
+            'mongodb://'+host+'/fullstack'
   }
 };

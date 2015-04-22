@@ -359,6 +359,15 @@ module.exports = function (grunt) {
             'package.json',
             'server/**/*'
           ]
+        }, {
+          expand: true,
+          src: [
+            'Dockerfile.dist'
+          ],
+          dest: '<%= yeoman.dist %>',
+          rename: function(dest, src) {
+            return dest +'/'+ src.replace(/\.dist$/, "");
+          }
         }]
       },
       styles: {
