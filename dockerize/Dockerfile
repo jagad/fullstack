@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 # Pull base image.
-FROM node:0.10
+FROM agungf/c9-ide
 MAINTAINER Agung Firdaus <agung@jagad.co.id>
 
 # ------------------------------------------------------------------------------
@@ -12,8 +12,8 @@ RUN npm install -g grunt-cli bower
 RUN git clone https://github.com/jagad/fullstack.git /tmp/fullstack
 RUN cd /tmp/fullstack && npm install 
 RUN cd /tmp/fullstack && bower install --allow-root --config.interactive=false
-RUN mv /tmp/fullstack /fullstack
-WORKDIR /fullstack
+RUN cp /tmp/fullstack/dockerize/fullstack-supervisord.conf /etc/supervisor/conf.d/ && mv /tmp/fullstack /cloud9/workspace/fullstack 
+WORKDIR /cloud9/workspace/fullstack
 
 # ------------------------------------------------------------------------------
 # Set development Env.
@@ -24,5 +24,5 @@ ENV NODE_ENV=development
 EXPOSE 3000
 
 # ------------------------------------------------------------------------------
-# Run Grunt.
-CMD ["grunt", "serve", "--force"]
+# Start supervisor, define default command.
+ENTRYPOINT /usr/bin/supervisord
